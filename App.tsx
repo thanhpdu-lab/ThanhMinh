@@ -25,26 +25,19 @@ const MY_CUSTOM_IMAGES = [
 
 // Danh sách lời chúc mặc định
 const WISHES = [
-  "Chúc mừng ngày đặc biệt của bạn!",
-  "Luôn rạng rỡ như đóa hồng vàng này nhé",
-  "Hạnh phúc, Thành công và Bình an",
-  "Mãi giữ nụ cười tỏa sáng trên môi",
-  "Vạn sự như ý, tỷ sự như mơ",
-  "Tràn đầy năng lượng và niềm vui mỗi ngày",
-  "Tỏa sáng theo cách riêng tuyệt vời nhất",
-  "Gửi trọn yêu thương và sự trân trọng tới bạn",
-  "Mỗi ngày trôi qua đều là một món quà ý nghĩa",
-  "Rạng ngời và kiêu sa như ánh bình minh",
-  "Mong bạn luôn được yêu thương và chở che",
-  "Vẻ đẹp vượt thời gian, tâm hồn luôn trẻ trung",
-  "Trái tim luôn ấm áp và ngập tràn hy vọng",
-  "Mọi giấc mơ của bạn sẽ sớm thành hiện thực",
-  "Bình yên trong từng hơi thở",
-  "Nụ cười của bạn là ánh nắng ban mai",
-  "Một đời an nhiên, tự tại và hạnh phúc",
-  "Xinh đẹp từ tận sâu trong tâm hồn",
-  "Mạnh mẽ, độc lập và đầy quyến rũ",
-  "Trái tim luôn rộng mở đón nhận yêu thương"
+  "Happy Valentine's Day 2026",
+  "Be Smile",
+  "Be Light",
+  "Be Shine",
+  "Be Mine",
+  "Be Sweet",
+  "Be Lucky",
+  "Be Lovely",
+  "Be Rich",
+  "Chúc nụ cười em luôn rạng rỡ",
+  "Chúc tim em đầy yêu thương",
+  "Chúc ơn trên luôn che chở",
+  "Trên mọi chặng đường",
 ];
 
 // Nhạc nền nhẹ nhàng, lãng mạn
