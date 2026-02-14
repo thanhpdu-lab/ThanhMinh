@@ -12,25 +12,18 @@ import { FloatingItem, Sparkle } from './types';
  *    và sửa nội dung trong phần 'contents'.
  */
 const WISHES = [
-  "Chúc mừng ngày đặc biệt của bạn!",
-  "Luôn rạng rỡ như đóa hồng vàng này nhé",
-  "Hạnh phúc, Thành công và Bình an",
-  "Mãi giữ nụ cười tỏa sáng trên môi",
-  "Vạn sự như ý, tỷ sự như mơ",
-  "Tràn đầy năng lượng và niềm vui mỗi ngày",
-  "Tỏa sáng theo cách riêng tuyệt vời nhất",
-  "Gửi trọn yêu thương và sự trân trọng tới bạn",
-  "Mỗi ngày trôi qua đều là một món quà ý nghĩa",
-  "Rạng ngời và kiêu sa như ánh bình minh",
-  "Mong bạn luôn được yêu thương và chở che",
-  "Vẻ đẹp vượt thời gian, tâm hồn luôn trẻ trung",
-  "Trái tim luôn ấm áp và ngập tràn hy vọng",
-  "Mọi giấc mơ của bạn sẽ sớm thành hiện thực",
-  "Bình yên trong từng hơi thở, nhẹ nhàng trong từng bước đi",
-  "Nụ cười của bạn chính là ánh sáng ấm áp nhất",
-  "Một đời an nhiên, tự tại và hạnh phúc",
-  "Xinh đẹp từ tận sâu trong tâm hồn thuần khiết",
-  "Mạnh mẽ, độc lập và đầy quyến rũ",
+  "Happy Valentine's Day",
+  "Be Bautiful",
+  "Be Happy",
+  "Be Light",
+  "Be Shine",
+  "Be Smile",
+  "Be mine",
+  "Be Sweet",
+  "Be Lucky",
+  "Be Love",
+  "Chúc tim em luôn đầy yêu thương",
+  "Cười toả sáng, chuyện đời không ngán",
   "Trái tim luôn rộng mở để đón nhận yêu thương"
 ];
 
