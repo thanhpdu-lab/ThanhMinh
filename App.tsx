@@ -239,10 +239,10 @@ const App: React.FC = () => {
       {/* Header Overlay */}
       <div className={`absolute top-12 text-center transition-all duration-1000 transform z-20 ${isBloomed ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'}`}>
         <h1 className="text-5xl md:text-7xl font-serif text-transparent bg-clip-text bg-gradient-to-b from-yellow-100 via-yellow-400 to-yellow-600 font-bold drop-shadow-[0_2px_20px_rgba(255,235,59,0.5)]">
-          Đóa Hồng Rạng Rỡ
+          Be Shine, Be Mine
         </h1>
         <p className="text-yellow-100/80 font-cursive text-2xl mt-4 italic drop-shadow-md">
-          Khoảnh khắc tuyệt vời nhất dành cho bạn...
+          Happy Valentine's Day 2026...
         </p>
       </div>
 
