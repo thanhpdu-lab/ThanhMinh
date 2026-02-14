@@ -6,25 +6,45 @@ import FloatingElement from './components/FloatingElement';
 import { FloatingItem, Sparkle } from './types';
 
 /** 
- * CÁCH THAY ĐỔI LỜI CHÚC:
- * 1. Chỉnh sửa các câu trong mảng WISHES dưới đây để thay đổi lời chúc cố định.
- * 2. Để thay đổi phong cách lời chúc do AI tạo ra, hãy kéo xuống hàm 'fetchExtraWishes' 
- *    và sửa nội dung trong phần 'contents'.
+ * ============================================================
+ * DANH SÁCH HÌNH ẢNH CỦA BẠN (TỰ THAY ĐỔI TẠI ĐÂY)
+ * ============================================================
+ * Bạn có thể thay thế các link bên dưới bằng link ảnh của mình.
+ * Hỗ trợ: Link ảnh trực tiếp (.jpg, .png) hoặc link Google Drive.
+ * Cách thêm: "link_anh_1", "link_anh_2", ...
  */
+const MY_CUSTOM_IMAGES = [
+  "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?q=80&w=1000&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1000&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?q=80&w=1000&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1000&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1000&auto=format&fit=crop",
+  // Dán thêm link của bạn vào đây...
+];
+
+// Danh sách lời chúc mặc định
 const WISHES = [
-  "Happy Valentine's Day",
-  "Be Bautiful",
-  "Be Happy",
-  "Be Light",
-  "Be Shine",
-  "Be Smile",
-  "Be mine",
-  "Be Sweet",
-  "Be Lucky",
-  "Be Love",
-  "Chúc tim em luôn đầy yêu thương",
-  "Cười toả sáng, chuyện đời không ngán",
-  "Trái tim luôn rộng mở để đón nhận yêu thương"
+  "Chúc mừng ngày đặc biệt của bạn!",
+  "Luôn rạng rỡ như đóa hồng vàng này nhé",
+  "Hạnh phúc, Thành công và Bình an",
+  "Mãi giữ nụ cười tỏa sáng trên môi",
+  "Vạn sự như ý, tỷ sự như mơ",
+  "Tràn đầy năng lượng và niềm vui mỗi ngày",
+  "Tỏa sáng theo cách riêng tuyệt vời nhất",
+  "Gửi trọn yêu thương và sự trân trọng tới bạn",
+  "Mỗi ngày trôi qua đều là một món quà ý nghĩa",
+  "Rạng ngời và kiêu sa như ánh bình minh",
+  "Mong bạn luôn được yêu thương và chở che",
+  "Vẻ đẹp vượt thời gian, tâm hồn luôn trẻ trung",
+  "Trái tim luôn ấm áp và ngập tràn hy vọng",
+  "Mọi giấc mơ của bạn sẽ sớm thành hiện thực",
+  "Bình yên trong từng hơi thở",
+  "Nụ cười của bạn là ánh nắng ban mai",
+  "Một đời an nhiên, tự tại và hạnh phúc",
+  "Xinh đẹp từ tận sâu trong tâm hồn",
+  "Mạnh mẽ, độc lập và đầy quyến rũ",
+  "Trái tim luôn rộng mở đón nhận yêu thương"
 ];
 
 // Nhạc nền nhẹ nhàng, lãng mạn
@@ -34,39 +54,41 @@ const App: React.FC = () => {
   const [isBloomed, setIsBloomed] = useState(false);
   const [floatingItems, setFloatingItems] = useState<FloatingItem[]>([]);
   const [sparkles, setSparkles] = useState<Sparkle[]>([]);
-  const [isLoadingWishes, setIsLoadingWishes] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   
   const isQuotaExhausted = useRef(false);
   const audioContextRef = useRef<AudioContext | null>(null);
   const bgMusicRef = useRef<HTMLAudioElement | null>(null);
 
+  // Hàm chuyển đổi link Google Drive sang link trực tiếp (viewable)
+  const convertDriveLink = (url: string) => {
+    const driveIdMatch = url.match(/(?:\/d\/|id=)([\w-]+)/);
+    if (driveIdMatch && driveIdMatch[1]) {
+      return `https://drive.google.com/uc?export=view&id=${driveIdMatch[1]}`;
+    }
+    return url;
+  };
+
+  // Chuẩn bị danh sách ảnh đã được xử lý link
+  const PROCESSED_IMAGES = MY_CUSTOM_IMAGES.map(url => convertDriveLink(url));
+
   useEffect(() => {
     const audio = new Audio(BG_MUSIC_URL);
     audio.loop = true;
     audio.volume = 0.4;
     bgMusicRef.current = audio;
-
-    return () => {
-      audio.pause();
-      bgMusicRef.current = null;
-    };
+    return () => { audio.pause(); bgMusicRef.current = null; };
   }, []);
 
   useEffect(() => {
-    if (bgMusicRef.current) {
-      bgMusicRef.current.muted = isMuted;
-    }
+    if (bgMusicRef.current) bgMusicRef.current.muted = isMuted;
   }, [isMuted]);
 
   const initAudio = () => {
     if (!audioContextRef.current) {
       audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
     }
-    if (audioContextRef.current.state === 'suspended') {
-      audioContextRef.current.resume();
-    }
-    
+    if (audioContextRef.current.state === 'suspended') audioContextRef.current.resume();
     if (bgMusicRef.current && bgMusicRef.current.paused) {
       bgMusicRef.current.play().catch(e => console.log("Music play blocked", e));
     }
@@ -76,22 +98,17 @@ const App: React.FC = () => {
     if (!audioContextRef.current || isMuted) return;
     const ctx = audioContextRef.current;
     const now = ctx.currentTime;
-
     for (let i = 0; i < 5; i++) {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
-      
       osc.type = 'sine';
       osc.frequency.setValueAtTime(400 + i * 200, now);
       osc.frequency.exponentialRampToValueAtTime(1200 + i * 300, now + 1.5);
-      
       gain.gain.setValueAtTime(0, now);
       gain.gain.linearRampToValueAtTime(0.1, now + 0.1);
       gain.gain.exponentialRampToValueAtTime(0.001, now + 1.5);
-      
       osc.connect(gain);
       gain.connect(ctx.destination);
-      
       osc.start(now + i * 0.1);
       osc.stop(now + 1.5);
     }
@@ -114,43 +131,26 @@ const App: React.FC = () => {
 
   const fetchExtraWishes = useCallback(async () => {
     if (isQuotaExhausted.current) return WISHES;
-
     try {
-      setIsLoadingWishes(true);
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       const response = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
-        /**
-         * THAY ĐỔI PROMPT TẠI ĐÂY:
-         * Bạn có thể thay đổi yêu cầu bên dưới để AI tạo ra các lời chúc khác.
-         * Ví dụ: "Hãy tạo 15 lời chúc sinh nhật hài hước cho bạn thân..."
-         */
         contents: "Hãy tạo 15 lời chúc mừng ngắn gọn, lãng mạn, sang trọng bằng tiếng Việt dành cho một người phụ nữ tuyệt vời. Trả về dưới dạng JSON list của các string.",
         config: {
           responseMimeType: "application/json",
-          responseSchema: {
-            type: Type.ARRAY,
-            items: { type: Type.STRING }
-          }
+          responseSchema: { type: Type.ARRAY, items: { type: Type.STRING } }
         }
       });
-      
       const generated = JSON.parse(response.text || "[]") as string[];
       return generated.length > 0 ? [...new Set([...WISHES, ...generated])] : WISHES;
     } catch (error: any) {
-      console.warn("API Error: dùng danh sách lời chúc mặc định.");
-      if (error?.message?.includes('429') || error?.message?.includes('RESOURCE_EXHAUSTED')) {
-        isQuotaExhausted.current = true;
-      }
+      if (error?.message?.includes('429') || error?.message?.includes('RESOURCE_EXHAUSTED')) isQuotaExhausted.current = true;
       return WISHES;
-    } finally {
-      setIsLoadingWishes(false);
     }
   }, []);
 
   const handleBloom = async () => {
     initAudio();
-    
     if (isBloomed) {
       setIsBloomed(false);
       setFloatingItems([]);
@@ -169,12 +169,21 @@ const App: React.FC = () => {
       const distance = 350 + Math.random() * 550; 
       const isImage = Math.random() > 0.6; 
       
+      let itemContent = "";
+      if (isImage) {
+        if (PROCESSED_IMAGES.length > 0) {
+          itemContent = PROCESSED_IMAGES[Math.floor(Math.random() * PROCESSED_IMAGES.length)];
+        } else {
+          itemContent = `https://picsum.photos/400/400?random=${i + 300}`;
+        }
+      } else {
+        itemContent = extraWishes[Math.floor(Math.random() * extraWishes.length)];
+      }
+      
       items.push({
         id: i,
         type: isImage ? 'image' : 'text',
-        content: isImage 
-          ? `https://picsum.photos/400/400?random=${i + 300}`
-          : extraWishes[Math.floor(Math.random() * extraWishes.length)],
+        content: itemContent,
         x: Math.cos(angle) * distance,
         y: Math.sin(angle) * distance,
         rotation: (Math.random() - 0.5) * 80,
@@ -189,35 +198,26 @@ const App: React.FC = () => {
     <div className="relative w-screen h-screen flex flex-col items-center justify-center overflow-hidden bg-black">
       {/* Background Sparkles */}
       {sparkles.map(s => (
-        <div 
-          key={s.id}
-          className="sparkle-particle"
-          style={{
-            top: s.top,
-            left: s.left,
-            width: s.size,
-            height: s.size,
-            '--duration': s.duration,
-            '--delay': s.delay,
-            '--dx': s.dx,
-            '--dy': s.dy,
-            '--drift-duration': s.driftDuration
+        <div key={s.id} className="sparkle-particle" style={{
+            top: s.top, left: s.left, width: s.size, height: s.size,
+            '--duration': s.duration, '--delay': s.delay, '--dx': s.dx, '--dy': s.dy, '--drift-duration': s.driftDuration
           } as any}
         />
       ))}
 
-      {/* Music Toggle */}
-      <button 
-        onClick={() => setIsMuted(!isMuted)}
-        className="absolute top-6 right-6 z-50 p-3 rounded-full bg-white/5 border border-white/20 hover:bg-white/10 transition-all text-yellow-100/70 hover:text-yellow-400 backdrop-blur-sm"
-        title={isMuted ? "Bật âm thanh" : "Tắt âm thanh"}
-      >
-        {isMuted ? (
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
-        ) : (
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
-        )}
-      </button>
+      {/* Control Buttons */}
+      <div className="absolute top-6 right-6 z-50 flex gap-4">
+        <button 
+          onClick={() => setIsMuted(!isMuted)}
+          className="p-3 rounded-full bg-white/5 border border-white/20 hover:bg-white/10 transition-all text-yellow-100/70 hover:text-yellow-400 backdrop-blur-sm shadow-xl"
+        >
+          {isMuted ? (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+          ) : (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          )}
+        </button>
+      </div>
 
       {/* Ambient Lighting */}
       <div className={`fixed inset-0 pointer-events-none transition-opacity duration-1500 ${isBloomed ? 'opacity-40' : 'opacity-10'}`}>
@@ -227,22 +227,17 @@ const App: React.FC = () => {
       {/* Floating Elements Container */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         {isBloomed && floatingItems.map(item => (
-          <FloatingElement 
-            key={item.id} 
-            item={item} 
-            audioContext={audioContextRef.current}
-            isMuted={isMuted}
-          />
+          <FloatingElement key={item.id} item={item} audioContext={audioContextRef.current} isMuted={isMuted} />
         ))}
       </div>
 
       {/* Header Overlay */}
       <div className={`absolute top-12 text-center transition-all duration-1000 transform z-20 ${isBloomed ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'}`}>
         <h1 className="text-5xl md:text-7xl font-serif text-transparent bg-clip-text bg-gradient-to-b from-yellow-100 via-yellow-400 to-yellow-600 font-bold drop-shadow-[0_2px_20px_rgba(255,235,59,0.5)]">
-          Be Shine, Be Mine
+          Đóa Hồng Rạng Rỡ
         </h1>
         <p className="text-yellow-100/80 font-cursive text-2xl mt-4 italic drop-shadow-md">
-          Happy Valentine's Day 2026...
+          Khoảnh khắc tuyệt vời nhất dành cho bạn...
         </p>
       </div>
 
