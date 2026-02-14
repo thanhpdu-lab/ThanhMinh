@@ -14,13 +14,13 @@ import { FloatingItem, Sparkle } from './types';
  * Cách thêm: "link_anh_1", "link_anh_2", ...
  */
 const MY_CUSTOM_IMAGES = [
-  "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?q=80&w=1000&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1000&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?q=80&w=1000&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1000&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1000&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1000&auto=format&fit=crop",
+  "https://i.ibb.co/spgLt53q/z7533332207121-f62d75e38414d6d53cba0069e81561fb.jpg",
+  "https://i.ibb.co/pBNNzqJw/z7533331187481-286efb4ea4839ae5ec7ae94fd0a263f7.jpg",
+  "https://i.ibb.co/bRJFCCT9/dsds.jpg",
+  "https://i.ibb.co/NdzZMr7t/489339616-4088415501432949-1753548840950006002-n.jpg",
+  "https://i.ibb.co/gLmYdcMv/481263088-4048216182119548-6150637390142351905-n.jpg",
+  "https://i.ibb.co/ycZghwXX/484116536-4066307336977099-7878542733866138768-n.jpg",
+  "https://i.ibb.co/60D8M75x/487860763-4084469288494237-3697710498857081950-n.jpg",
   // Dán thêm link của bạn vào đây...
 ];
 
