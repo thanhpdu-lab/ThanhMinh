@@ -246,7 +246,7 @@ const App: React.FC = () => {
           <div className="relative px-10 py-5 bg-[#fcf5e5] shadow-[5px_5px_15px_rgba(0,0,0,0.5)] transform -rotate-2 border border-[#e5dec9] rounded-sm">
             <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-16 h-8 bg-white/30 backdrop-blur-sm rotate-1 border border-white/20"></div>
             <p className="text-amber-900 font-cursive text-2xl md:text-4xl tracking-wide relative">
-              Hãy click vào bông hoa
+              Hãy click vào bông hoa và chờ 15s...
             </p>
             <div className="absolute inset-0 opacity-10 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/pinstriped-suit.png')]"></div>
           </div>
