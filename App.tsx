@@ -129,7 +129,7 @@ const App: React.FC = () => {
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       const response = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
-        contents: "Hãy tạo 15 lời chúc mừng ngắn gọn, lãng mạn, sang trọng bằng tiếng Việt dành cho một người phụ nữ tuyệt vời. Trả về dưới dạng JSON list của các string.",
+        contents: "Hãy tạo 1 lời chúc mừng ngắn gọn, lãng mạn, sang trọng bằng tiếng Việt dành cho một người phụ nữ tuyệt vời. Trả về dưới dạng JSON list của các string.",
         config: {
           responseMimeType: "application/json",
           responseSchema: { type: Type.ARRAY, items: { type: Type.STRING } }
